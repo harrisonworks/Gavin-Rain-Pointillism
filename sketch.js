@@ -1,22 +1,20 @@
 let img;
 
 // Size of target
-const targetSize = 10;
+const targetSize = 50;
 // Number of rings
 const targetSamples = 3;
 // Adjust the size of the targets
-const targetScaling = 0.9;
+const targetScaling = 0.92;
 // larger number == closer point sampled
 // smaller number == more random
 const sampleRange = 4;
 
-const spacing = targetSize * 1.5;
-
-const gridSample = targetSize / 10;
+let spacing, gridSample;
 
 function preload() {
   // update path to use your own images
-  img = loadImage("data/pic.png");
+  img = loadImage("data/nan-closeup-2.png");
 }
 
 function setup() {
@@ -24,11 +22,21 @@ function setup() {
   // If you want a different sized image just make the input
   // image the approprate size
   createCanvas(img.width * 10, img.height * 10);
-  print(img.width + " • " + img.height);
+  // print(img.width + " • " + img.height);
+
+  // targetSize = floor(random(30, 50));
+  // targetSamples = floor(random(2, 4));
+  // targetScaling = random(0.7, 0.98);
+  // sampleRange = floor(random(2, 4));
+
+  spacing = targetSize * 1.5;
+  gridSample = targetSize / 10;
 }
 
 function draw() {
   background(255);
+
+  let counter = 0;
 
   let yCount = 0;
   for (let gridY = 0; gridY < img.height; gridY += gridSample) {
@@ -37,17 +45,25 @@ function draw() {
       for (let gridX = 0; gridX < img.width; gridX += gridSample) {
         let posX = map(gridX, 0, img.width, spacing, width - spacing);
 
+        counter++;
         // get current color
-        // let c = color(img.get(gridX, gridY));
+        let c = color(img.get(gridX, gridY));
 
         // greyscale conversion
-        // let greyscale = round(
-        //   red(c) * 0.222 + green(c) * 0.707 + blue(c) * 0.071
-        // );
+        let greyscale = round(
+          red(c) * 0.222 + green(c) * 0.707 + blue(c) * 0.071
+        );
 
         // pixel color to fill, greyscale to ellipse size
-        // let sizeScale = map(greyscale, 0, 255, targetSize, targetSize);
-        let sizeScale = targetSize * targetScaling;
+        let sizeScale = map(
+          greyscale,
+          255,
+          0,
+          targetSize * 0.7,
+          targetSize * targetScaling,
+          true
+        );
+        //  let sizeScale = targetSize * targetScaling;
         target(gridX, gridY, posX, posY, sizeScale, targetSamples);
       }
     } else {
@@ -60,18 +76,25 @@ function draw() {
           spacing * 1.25,
           width - spacing / 1.25
         );
-
+        counter++;
         // get current color
-        // let c = color(img.get(gridX, gridY));
+        let c = color(img.get(gridX, gridY));
 
         // greyscale conversion
-        // let greyscale = round(
-        //   red(c) * 0.222 + green(c) * 0.707 + blue(c) * 0.071
-        // );
+        let greyscale = round(
+          red(c) * 0.222 + green(c) * 0.707 + blue(c) * 0.071
+        );
 
         // pixel color to fill, greyscale to ellipse size
-        // let sizeScale = map(greyscale, 0, 255, targetSize, targetSize);
-        let sizeScale = targetSize * targetScaling;
+        let sizeScale = map(
+          greyscale,
+          255,
+          0,
+          targetSize * 0.7,
+          targetSize * targetScaling,
+          true
+        );
+        // let sizeScale = targetSize * targetScaling;
 
         target(gridX, gridY, posX, posY, sizeScale, targetSamples);
       }
@@ -80,6 +103,7 @@ function draw() {
     yCount++;
   }
 
+  console.log(counter);
   noLoop();
 }
 
@@ -101,9 +125,9 @@ function target(gridX, gridY, xPos, yPos, size, circleNum) {
   }
 }
 
-// function keyPressed() {
-//   saveCanvas("img", "png");
-// }
+function keyPressed() {
+  saveCanvas("img", "png");
+}
 
 function mousePressed() {
   loop();
