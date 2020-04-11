@@ -1,20 +1,22 @@
 let img;
 
 // Size of target
-const targetSize = 50;
+let targetSize = 30;
 // Number of rings
-const targetSamples = 3;
+let targetSamples = 3;
 // Adjust the size of the targets
-const targetScaling = 0.92;
+let targetScaling = 0.85;
 // larger number == closer point sampled
 // smaller number == more random
-const sampleRange = 4;
+let sampleRange = 4;
 
-let spacing, gridSample;
+let spacing;
+
+let gridSample;
 
 function preload() {
   // update path to use your own images
-  img = loadImage("data/nan-closeup-2.png");
+  img = loadImage("data/lucy-closeup-retouch.png");
 }
 
 function setup() {
@@ -26,7 +28,7 @@ function setup() {
 
   // targetSize = floor(random(30, 50));
   // targetSamples = floor(random(2, 4));
-  // targetScaling = random(0.7, 0.98);
+  // targe dtScaling = random(0.7, 0.98);
   // sampleRange = floor(random(2, 4));
 
   spacing = targetSize * 1.5;
