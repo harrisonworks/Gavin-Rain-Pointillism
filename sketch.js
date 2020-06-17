@@ -25,6 +25,7 @@ function setup() {
 
 function draw() {
   background(255);
+  noStroke();
 
   // Run through every pixel of portrait image
   let yCount = 0;
@@ -44,17 +45,17 @@ function draw() {
         );
       }
 
-      // get current color
+      // Get current color at current pixel
       let colorSample = color(img.get(ringX, ringY));
 
-      // brightness conversion
+      // Brightness at current color
       let brightness = round(
         red(colorSample) * 0.222 +
           green(colorSample) * 0.707 +
           blue(colorSample) * 0.071
       );
 
-      // pixel color to fill, brightness to ellipse size
+      // Pixel brightness creates smaller rings
       let sizeScale = map(
         brightness,
         255,
@@ -64,6 +65,7 @@ function draw() {
         true
       );
 
+      // Render ring at current point
       pointillismPoint(ringX, ringY, posX, posY, sizeScale, ringNumber);
     }
 
@@ -74,18 +76,16 @@ function draw() {
 }
 
 function pointillismPoint(gridX, gridY, xPos, yPos, size, circleNum) {
-  noStroke();
-
   for (let index = 0; index < circleNum; index++) {
     let randomSampleX =
       gridX + random(-size / colorSampleRange, size / colorSampleRange);
     let randomSampleY =
       gridY + random(-size / colorSampleRange, size / colorSampleRange);
 
+    // Sample color with random deviation from current pixel point
     let samplePoint = color(img.get(randomSampleX, randomSampleY));
-
-    // every second loop alternate the color of the ellipse
     fill(samplePoint);
+
     // Calculate the size of the ellipse needed in each loop
     let currentSize = size - (index * size) / circleNum;
     ellipse(xPos, yPos, currentSize);
@@ -93,10 +93,12 @@ function pointillismPoint(gridX, gridY, xPos, yPos, size, circleNum) {
 }
 
 function keyPressed() {
+  // Save current render
   saveCanvas(`${millis()}`, "png");
 }
 
 function mousePressed() {
+  // Reinitialize random pointerlism parameters
   ringSize = round(random(20, 50));
   ringNumber = 3;
   ringScale = random(0.78, 0.92);
