@@ -8,7 +8,7 @@ let ringSize,
 let canvasScale = 10;
 
 function preload() {
-  img = loadImage("data/nan-closeup-2.png");
+  img = loadImage("data/nan-portait.png");
 }
 
 function setup() {
@@ -21,8 +21,6 @@ function setup() {
   colorSampleRange = round(random(3, 8));
   ringSpacing = ringSize * 1.5;
   ringInterval = ringSize / canvasScale;
-
-  noLoop();
 }
 
 function draw() {
@@ -71,6 +69,8 @@ function draw() {
 
     yCount++;
   }
+
+  noLoop();
 }
 
 function pointillismPoint(gridX, gridY, xPos, yPos, size, circleNum) {
