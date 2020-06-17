@@ -92,9 +92,9 @@ function pointillismPoint(gridX, gridY, xPos, yPos, size, circleNum) {
   }
 }
 
-// function keyPressed() {
-//   saveCanvas(millis(), "png");
-// }
+function keyPressed() {
+  saveCanvas(`${millis()}`, "png");
+}
 
 function mousePressed() {
   ringSize = round(random(20, 50));
